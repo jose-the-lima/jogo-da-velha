@@ -1,0 +1,60 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header h1 {
+    text-align: center;
+}
+
+main {
+    margin: 0 auto;
+
+    border: 2px solid #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 600px;
+
+    margin-top: 4rem;
+}
+
+.line {
+    width: 100%;
+    display: flex;
+    justify-content:center;
+}
+
+.line .field {
+    width: 33.3%;
+    height: 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.field:hover {
+    background: #bbbbbb;
+    cursor: pointer;
+}
+
+.line:nth-child(1), .line:nth-child(2) {
+    border-bottom: 1px solid #000000;
+}
+.line .field:nth-child(1), .line .field:nth-child(2) {
+    border-right: 1px solid #000000;
+}
+
+.symbol-x, .symbol-o {
+    font-size: 5rem;
+}
+.symbol-x {
+    color: #ff0000;
+}
+.symbol-o {
+    color: #0000ff;
+}
