@@ -73,11 +73,11 @@ function verificaSeHaGanhador() {
     const horizontalWin = vitoriaHorizontal(array);
     const verticalWin = vitoriaVertical(array);
 
-    const nobodyWin = [crossWin, horizontalWin, verticalWin].every(el => el === false);
+    const nobodyWin = [crossWin[1], horizontalWin[1], verticalWin[1]].every(el => el === false);
     const velha = verificaVelha();
 
-    if(crossWin || horizontalWin || verticalWin) {
-        alert("Alguem venceu");
+    if(crossWin[1] || horizontalWin[1] || verticalWin[1]) {
+        preencheVencedor([{cross: crossWin}, {horizontal: horizontalWin}, {vertical: verticalWin}]);
     } else if(nobodyWin && velha) {
         alert("Velha")
     }
@@ -113,28 +113,28 @@ function vitoriaCruzada(lista) {
     const victoryBall = validaSeTemVitoria(crosses, "O")
     const victoryX = validaSeTemVitoria(crosses, "X")
 
-    console.log(victoryBall);
-    console.log(victoryX)
+    let victory = [-1, false, ""]
 
     if(victoryBall.includes(true)) {
-        return true
+        victory = [victoryBall.indexOf(true), true, "ball"]
     } else if(victoryX.includes(true)) {
-        return true
-    } else {
-        return false
+        victory = [victoryX.indexOf(true), true, "x"]
     }
+    return victory;
 }
 
 function vitoriaHorizontal(lista) {
     const victoryBall = validaSeTemVitoria(lista, "O")
     const victoryX = validaSeTemVitoria(lista, "X")
 
-    let victory = false;
+    let victory = [-1, false, ""];
     if(victoryBall.includes(true)) {
-        victory = true
-    } else if (victoryX.includes(true))[
-        victory = true
-    ]
+        const index = victoryBall.indexOf(true);
+        victory = [index, true, "ball"]
+    } else if (victoryX.includes(true)){
+        const index = victoryX.indexOf(true);
+        victory = [index, true, "x"]
+    }
 
     return victory;
 }
@@ -150,12 +150,16 @@ function vitoriaVertical(lista) {
     const victoryBall = validaSeTemVitoria(newArray, "O")
     const victoryX = validaSeTemVitoria(newArray, "X")
 
+    let victory = [-1, false, ""]
+
     if(victoryBall.includes(true)) {
-        return true
+        const index = victoryBall.indexOf(true)
+        victory = [index, true, "ball"]
     } else if(victoryX.includes(true)) {
-        return true
+        const index = victoryX.indexOf(true);
+        victory = [index, true, "x"]
     }
-    return false
+    return victory;
 }
 
 function verificaVelha() {
@@ -163,7 +167,47 @@ function verificaVelha() {
     array = [...array[0], ...array[1], ...array[2]]
 
     const todosMarcados = array.every(el => el === "X" || el === "O");
-    console.log("Todos marcados ? " , todosMarcados);
 
     return todosMarcados;
+}
+
+
+// Pintando o vencedor: 
+
+function preencheVencedor(results) {
+    if(results[0].cross[1]) {
+        const cross = results[0].cross;
+        pintarBlocosVencedores(cross[0], "cruzado", cross[2]);
+    } else if(results[1].horizontal[1]) {
+        const horizontal = results[1].horizontal;
+        pintarBlocosVencedores(horizontal[0], "horizontal", horizontal[2])
+    } else if(results[2].vertical[1]) {
+        const vertical = results[2].vertical;
+        pintarBlocosVencedores(vertical[0], "vertical", vertical[2])
+    }
+}
+
+function buscaElementosCruzados(pos) {
+    if(pos === 0) {
+        return [lines[0].children[0], lines[1].children[1], lines[2].children[2]]
+    } else if(pos === 1) {
+        return [lines[0].children[2], lines[1].children[1], lines[2].children[0]]
+    }
+}
+
+function pintarBlocosVencedores(pos, metodoVencedor, winner) {
+    switch(metodoVencedor) {
+        case "cruzado":
+            const cross = buscaElementosCruzados(pos);
+            cross.forEach(el => el.classList.add(`winner-${winner}`))
+        break;
+        case "horizontal":
+            const horizontal = [...lines[pos].children];
+            horizontal.forEach(el => el.classList.add(`winner-${winner}`));
+        break;
+        case "vertical":
+            const vertical = [lines[0].children[pos], lines[1].children[pos], lines[2].children[pos]];
+            vertical.forEach(el => el.classList.add(`winner-${winner}`));
+        break;
+    }
 }
