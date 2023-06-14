@@ -1,3 +1,9 @@
+:root {
+    --x-color: #ff0000;
+    --ball-color: #0000ff;
+    --bg-button-color: #cccccc;
+}
+
 * {
     margin: 0px;
     padding: 0px;
@@ -9,7 +15,10 @@
 body{
     background-image: linear-gradient(to bottom, #dddddd, #bbbbbb);
     height: 100vh;
-    padding: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 header h1 {
@@ -26,8 +35,6 @@ main {
     flex-wrap: wrap;
 
     width: 600px;
-
-    margin-top: 4rem;
 }
 
 .line {
@@ -61,10 +68,10 @@ main {
     font-size: 5rem;
 }
 .symbol-x {
-    color: #ff0000;
+    color: var(--x-color);
 }
 .symbol-o {
-    color: #0000ff;
+    color: var(--ball-color);
 }
 
 .winner-ball {
@@ -73,4 +80,206 @@ main {
 
 .winner-x {
     background-color: lightcoral;
+}
+
+
+
+
+/* Start-game and menu section */
+
+.start-game {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-image: url(https://t4.ftcdn.net/jpg/05/98/12/23/360_F_598122349_zeAn5Eavq5PkSE3BPlv0T8bat9DrNJM7.jpg)
+}
+
+.menu, .who-will-start {
+    height: 80%;
+    width: 50%;
+
+    background: #ffffff;
+
+    display: flex;
+    
+    box-shadow: 3px 5px 30px #000000;
+
+    transition: 1s all ease;
+}
+
+.menu {
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.menu h2 {
+    font-size: 2.5rem;
+}
+
+.red {color: var(--x-color);}
+.blue {color: var(--ball-color);}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    width: 100%;
+}
+
+.bt {
+    width: 50%;
+    font-size: 1.5rem;
+
+    font-weight: bold;
+
+    padding: 20px 0px;
+    cursor: pointer;
+    transition: .5s all ease;
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--bg-button-color);
+}
+
+.bt:nth-child(1) {
+    color: var(--x-color);
+}
+
+.bt:nth-child(1):hover {
+    color: #ffffff;
+    background-color: var(--x-color);
+    box-shadow: 2px 4px 5px #000000;
+}
+
+.bt:nth-child(2) {
+    color: var(--ball-color);
+}
+
+.bt:nth-child(2):hover {
+    color: #ffffff;
+    background-color: var(--ball-color);
+    box-shadow: 2px 4px 5px #000000;
+}
+
+.invisible {
+    display: none;
+}
+
+
+
+
+/* Menu da moeda */
+
+.who-will-start {
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.players {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    gap: 2rem;
+}
+
+.player-1, .player-2 {
+    flex: 1;
+
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+
+    gap: 2rem;
+    border: 2px solid transparent;
+
+    margin: 10px 0px;
+    padding: 10px;
+
+    transition: .5s all ease;
+}
+
+.player-1 span, .player-2 span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.player-1 span, .symbol-player-1 {color: var(--x-color);}
+.player-2 span, .symbol-player-2 {color: var(--ball-color);}
+
+.symbol-player-1, .symbol-player-2 {
+    width: 50%;
+    font-size: 6rem;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.symbol-player-1 {border: 1px solid #ff0000;}
+.symbol-player-2 {border: 1px solid #0000ff;}
+
+
+
+.answer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px 50px;
+    align-items: center;
+}
+
+.answer span {
+    font-size: 2rem;
+}
+
+.answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.answer-options button {
+    font-size: 2rem;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    font-weight: bold;
+    transition: .5s all ease;
+    background: var(--bg-button-color);
+    border: none;
+    border-radius: 5px;
+}
+.start-prize-draw {
+    color: var(--x-color);
+}
+.start-prize-draw:hover {
+    background: var(--x-color);
+    color: #ffffff;
+}
+
+.start-game-button {
+    color: var(--ball-color);
+}
+.start-game-button:hover{
+    background: var(--ball-color);
+    color: #ffffff;
+}
+
+
+.selected-ball {
+    border: 2px solid #0000ff;
+}
+.selected-x {
+    border: 2px solid #ff0000;
 }

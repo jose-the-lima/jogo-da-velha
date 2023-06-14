@@ -3,6 +3,10 @@ const lines = document.querySelectorAll(".line");
 let player1 = true;
 let player2 = false;
 
+let playerOnePoints = 0;
+let playerTwoPoints = 0;
+let haUmVencedor = false;
+
 function createElement(content, classe) {
     const element = document.createElement("div");
     element.innerHTML = content;
@@ -36,7 +40,7 @@ function change() {
 fields.forEach((field) => {
     field.addEventListener("click", (event) => {
         const local = event.target;
-        if(verificaSeJaFoiMarcado(local)) {
+        if(verificaSeJaFoiMarcado(local) && !haUmVencedor) {
             player1 ? marca(local, createX()) : marca(local, createO());
         }
 
@@ -81,6 +85,12 @@ function verificaSeHaGanhador() {
     } else if(nobodyWin && velha) {
         alert("Velha")
     }
+
+    // mostraQuemVenceu(playerVencedor); 
+    // pontuaPlacar();
+    // ativarTelaDeResetDeJogo();
+    // haUmVencedor = true;
+    // Todas as três funções acima, serão criadas ainda.
 }
 
 // Verificações de vitória de modos diferentes, e verificação de velha
@@ -184,7 +194,7 @@ function preencheVencedor(results) {
     } else if(results[2].vertical[1]) {
         const vertical = results[2].vertical;
         pintarBlocosVencedores(vertical[0], "vertical", vertical[2])
-    }
+    } 
 }
 
 function buscaElementosCruzados(pos) {
@@ -211,3 +221,6 @@ function pintarBlocosVencedores(pos, metodoVencedor, winner) {
         break;
     }
 }
+
+// Funções de pontuação:
+
