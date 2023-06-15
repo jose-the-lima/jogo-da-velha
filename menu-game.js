@@ -1,8 +1,11 @@
 const onePlayerBt = document.querySelector(".one-player");
 const twoPlayersBt = document.querySelector(".two-players");
 const mainScreen = document.querySelector(".menu");
+const startGameBackground = document.querySelector(".start-game");
 const playersScreen = document.querySelector(".who-will-start");
 const buttonOfPrizeDraw = document.querySelector(".start-prize-draw");
+const scoresArea = document.querySelector("header");
+const gameScreen = document.querySelector("main");
 
 const playerScreen1 = document.querySelector(".player-1");
 const playerScreen2 = document.querySelector(".player-2");
@@ -44,6 +47,11 @@ function changeTheDrawnPlayer(drawnNumber) {
     playerThatStart = drawnNumber;
 }
 
+function resetDrawnPlayer() {
+    playerScreen1.classList.remove("selected-x");
+    playerScreen2.classList.remove("selected-ball");
+}
+
 function activatePlayButton() {
     playButton.classList.add("start-game-button")
     playButton.removeAttribute("disabled")
@@ -55,20 +63,33 @@ function limpaPlayers() {
 }
 
 function prizeDrawTheFirst() {
-    const drawn = Math.round(Math.random() * 2);
-
-    return drawn === 0 ? 1 : drawn;
+    const drawn = Math.round(Math.random() * 3);
+    let result;
+    if(drawn === 0 || drawn === 1) {
+        result = 1;
+    } else {
+        result = 2;
+    }
+    
+    return result;
 }
 
 playButton.addEventListener("click", (event) => {
     const ativo = event.target.classList.contains("start-game-button") && !playButton.hasAttribute("disabled");
 
     if(ativo) {
-        fecharTela(document.querySelector(".start-game"));
-        ativaTela(document.querySelector("main"))
+        fecharTela(startGameBackground);
+        fecharTela(mainScreen);
+        fecharTela(playersScreen);
+        ativaTela(gameScreen)
+        ativaTela(scoresArea)
 
         if(playerThatStart === 2) {
-            change();
+            player2 = true;
+            player1 = false;
+        } else{
+            player1 = true;
+            player2 = false;
         }
     }
 })

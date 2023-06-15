@@ -1,12 +1,12 @@
 const fields = document.querySelectorAll(".field");
 const lines = document.querySelectorAll(".line");
+const resetScreen = document.querySelector(".winner-section");
 let player1 = true;
 let player2 = false;
 
 let playerOnePoints = 0;
 let playerTwoPoints = 0;
 let haUmVencedor = false;
-let vencedor;
 
 function createElement(content, classe) {
     const element = document.createElement("div");
@@ -82,14 +82,18 @@ function verificaSeHaGanhador() {
     const velha = verificaVelha();
 
     if(crossWin[1] || horizontalWin[1] || verticalWin[1]) {
-        preencheVencedor([{cross: crossWin}, {horizontal: horizontalWin}, {vertical: verticalWin}]);
+        if(!haUmVencedor) {
+            const playerThatScored = preencheVencedor([{cross: crossWin}, {horizontal: horizontalWin}, {vertical: verticalWin}]);
+            pontuaPlacar(playerThatScored);
+            const message = playerThatScored === "x" ? "Player 1 venceu!!": "Player 2 venceu!!";
+            ativarTelaDeResetDeJogo(message);
+            haUmVencedor = true;
+        }
     } else if(nobodyWin && velha) {
-        alert("Velha")
+        ativarTelaDeResetDeJogo("Deu velha##!");
     }
 
-    pontuaPlacar();
-    ativarTelaDeResetDeJogo();
-    haUmVencedor = true;
+    
 }
 
 // Verificações de vitória de modos diferentes, e verificação de velha
@@ -175,9 +179,7 @@ function verificaVelha() {
     let array = montaArrayComLinhas();
     array = [...array[0], ...array[1], ...array[2]]
 
-    const todosMarcados = array.every(el => el === "X" || el === "O");
-
-    return todosMarcados;
+    return array.every(el => el === "X" || el === "O");
 }
 
 
@@ -195,8 +197,7 @@ function preencheVencedor(results) {
     } else if(results[2].vertical[1]) {
         const vertical = results[2].vertical;
         pintarBlocosVencedores(vertical[0], "vertical", vertical[2])
-        return vertical[2]; // Minha lógica por trás daqui, é que por aqui será retornadao um valor do vencedor, e na função preenche vencedor
-        // vai retornara ele, e de acordo com a resposta retornada o placar vai ser alterado, se for "x" o player 1 marca, se for "ball" o player 2 marca
+        return vertical[2];
     }
 }
 
@@ -226,14 +227,67 @@ function pintarBlocosVencedores(pos, metodoVencedor, winner) {
 }
 
 // Funções de pontuação:
+const playerOneScoreElement = document.querySelector(".player-1-score-number");
+const playerTwoScoreElement = document.querySelector(".player-2-score-number");
 
-function pontuaPlacar() {
+function pontuaPlacar(playerThatScored) {
+    if(playerThatScored === "x") {
+        playerOnePoints++;
+        atualizaPlacar(playerOneScoreElement, playerOnePoints);
+    } else if(playerThatScored === "ball") {
+        playerTwoPoints++;
+        atualizaPlacar(playerTwoScoreElement, playerTwoPoints);
+    }
+}
 
+function atualizaPlacar(elemento, number) {
+    elemento.innerHTML = number;
 }
 
 
-// Tela de reset de jogo: 
+// Tela de reset de jogo e funções de reset: 
+const resetButton = document.querySelector(".winner-button-reset");
+const returnToMenuButton = document.querySelector(".winner-button-menu");
 
-function ativarTelaDeResetDeJogo() {
-    ativaTela(document.querySelector(".winner-section"))
+resetButton.addEventListener("click", resetaPartida)
+
+function ativarTelaDeResetDeJogo(message) {
+    const messageElement = resetScreen.querySelector("span");
+    messageElement.innerHTML = message;
+    ativaTela(resetScreen);
 }
+
+function resetaCampos() {
+    fields.forEach(el => {
+        el.innerHTML = "";
+        el.classList.remove("mark", "winner-x", "winner-ball")
+    })
+}
+
+function resetaPartida() {
+    resetaCampos();
+    haUmVencedor = false;
+    fecharTela(resetScreen)
+}
+
+function zeraPontos() {
+    playerOneScoreElement.innerHTML = "0";
+    playerTwoScoreElement.innerHTML = "0";
+    playerOnePoints = 0;
+    playerTwoPoints = 0;
+    playerThatStart = undefined;
+}
+
+function reset() {
+    resetaPartida();
+    zeraPontos();
+    player1 = false;
+    player2= false;
+    resetDrawnPlayer();
+    ativaTela(document.querySelector(".start-game"));
+    ativaTela(mainScreen);
+    fecharTela(gameScreen);
+    fecharTela(scoresArea);
+}
+
+returnToMenuButton.addEventListener("click", reset)
