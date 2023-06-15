@@ -3,6 +3,8 @@ const lines = document.querySelectorAll(".line");
 const resetScreen = document.querySelector(".winner-section");
 let player1 = true;
 let player2 = false;
+let cpuIsPlaying = false;
+let cpuTurn = false;
 
 let playerOnePoints = 0;
 let playerTwoPoints = 0;
@@ -33,8 +35,14 @@ function marca(target, elemento) {
 }
 
 function change() {
-    player1 = !player1;
-    player2 = !player2;
+    if(cpuIsPlaying) {
+        player1 = !player1;
+        cpuTurn = !cpuTurn;
+    } else {
+        player1 = !player1;
+        player2 = !player2;
+    }
+    
 }
 
 
@@ -42,10 +50,17 @@ fields.forEach((field) => {
     field.addEventListener("click", (event) => {
         const local = event.target;
         if(verificaSeJaFoiMarcado(local) && !haUmVencedor) {
-            player1 ? marca(local, createX()) : marca(local, createO());
+            if(cpuIsPlaying) {
+                if(!cpuTurn) {
+                    marca(local, createX())
+                    verificaSeHaGanhador()
+                    cpuMark();
+                }
+            } else {
+                player1 ? marca(local, createX()) : marca(local, createO());
+                verificaSeHaGanhador()
+            }
         }
-
-        verificaSeHaGanhador()
     })
 });
 
@@ -268,6 +283,11 @@ function resetaPartida() {
     resetaCampos();
     haUmVencedor = false;
     fecharTela(resetScreen)
+
+    console.log(cpuIsPlaying, cpuTurn);
+    if(cpuIsPlaying && cpuTurn) {
+        cpuMark();
+    }
 }
 
 function zeraPontos() {
@@ -283,6 +303,8 @@ function reset() {
     zeraPontos();
     player1 = false;
     player2= false;
+    cpuIsPlaying = false;
+    cpuTurn = false;
     resetDrawnPlayer();
     ativaTela(document.querySelector(".start-game"));
     ativaTela(mainScreen);
@@ -291,3 +313,30 @@ function reset() {
 }
 
 returnToMenuButton.addEventListener("click", reset)
+
+
+// Funções da máquina como player 2
+
+function returnCamposVazios() {
+    return Array(...fields).filter(field => !field.classList.contains("mark"));
+}
+
+function sorteiaCampoDoCpu(total) {
+    const sorteado = Math.round(Math.random() * total);
+    if(sorteado === total) {
+        return sorteado - 1;
+    } 
+    return sorteado;
+}
+
+function cpuMark() {
+    if(!haUmVencedor) {
+        setTimeout(() => {
+            const camposVazios = returnCamposVazios();
+            const localForMarkNumber = sorteiaCampoDoCpu(camposVazios.length)
+            marca(camposVazios[localForMarkNumber], createO())
+            verificaSeHaGanhador()
+        }, 1000)
+    }
+    
+}

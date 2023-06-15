@@ -44,7 +44,18 @@ function changeTheDrawnPlayer(drawnNumber) {
         playerScreen2.classList.add("selected-ball");
     }
 
-    playerThatStart = drawnNumber;
+    if(cpuIsPlaying) { 
+        if(drawnNumber === 1) {
+            player1 = true;
+            cpuTurn = false;
+        } else {
+            cpuTurn = true;
+            player1 = false;
+        }
+    } else {
+        playerThatStart = drawnNumber;
+    }
+    
 }
 
 function resetDrawnPlayer() {
@@ -83,6 +94,7 @@ playButton.addEventListener("click", (event) => {
         fecharTela(playersScreen);
         ativaTela(gameScreen)
         ativaTela(scoresArea)
+        
 
         if(playerThatStart === 2) {
             player2 = true;
@@ -91,5 +103,16 @@ playButton.addEventListener("click", (event) => {
             player1 = true;
             player2 = false;
         }
+        resetaPartida();
     }
+})
+
+
+
+// Funções do botão do player 1
+
+onePlayerBt.addEventListener("click", () => {
+    fecharTela(mainScreen);
+    ativaTela(playersScreen);
+    cpuIsPlaying = true;
 })
