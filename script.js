@@ -6,6 +6,7 @@ let player2 = false;
 let playerOnePoints = 0;
 let playerTwoPoints = 0;
 let haUmVencedor = false;
+let vencedor;
 
 function createElement(content, classe) {
     const element = document.createElement("div");
@@ -86,11 +87,9 @@ function verificaSeHaGanhador() {
         alert("Velha")
     }
 
-    // mostraQuemVenceu(playerVencedor); 
-    // pontuaPlacar();
-    // ativarTelaDeResetDeJogo();
-    // haUmVencedor = true;
-    // Todas as três funções acima, serão criadas ainda.
+    pontuaPlacar();
+    ativarTelaDeResetDeJogo();
+    haUmVencedor = true;
 }
 
 // Verificações de vitória de modos diferentes, e verificação de velha
@@ -188,13 +187,17 @@ function preencheVencedor(results) {
     if(results[0].cross[1]) {
         const cross = results[0].cross;
         pintarBlocosVencedores(cross[0], "cruzado", cross[2]);
+        return cross[2];
     } else if(results[1].horizontal[1]) {
         const horizontal = results[1].horizontal;
         pintarBlocosVencedores(horizontal[0], "horizontal", horizontal[2])
+        return horizontal[2];
     } else if(results[2].vertical[1]) {
         const vertical = results[2].vertical;
         pintarBlocosVencedores(vertical[0], "vertical", vertical[2])
-    } 
+        return vertical[2]; // Minha lógica por trás daqui, é que por aqui será retornadao um valor do vencedor, e na função preenche vencedor
+        // vai retornara ele, e de acordo com a resposta retornada o placar vai ser alterado, se for "x" o player 1 marca, se for "ball" o player 2 marca
+    }
 }
 
 function buscaElementosCruzados(pos) {
@@ -224,3 +227,13 @@ function pintarBlocosVencedores(pos, metodoVencedor, winner) {
 
 // Funções de pontuação:
 
+function pontuaPlacar() {
+
+}
+
+
+// Tela de reset de jogo: 
+
+function ativarTelaDeResetDeJogo() {
+    ativaTela(document.querySelector(".winner-section"))
+}

@@ -7,10 +7,19 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <!-- <header>
-            <h1>Jogo da velha</h1>
-        </header> -->
-        <section class="start-game">
+        <header>
+            <div class="scores">
+                <div class="player-1-score">
+                    <span>Player 1:</span>
+                    <span>0</span>
+                </div>
+                <div class="player-2-score">
+                    <span>Player 2:</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </header>
+        <section class="start-game invisible">
             <div class="menu">
                 <h2><span class="red">Jogo d</span><span class="blue">a velha</span></h2>
                 <div class="buttons">
@@ -41,7 +50,7 @@
                 </div>
             </div>
         </section>
-        <main class="invisible">
+        <main>
             <div class="line">
                 <div class="field"></div>
                 <div class="field"></div>
@@ -58,6 +67,14 @@
                 <div class="field"></div>
                 <div class="field"></div>
                 <div class="field"></div>
+            </div>
+
+            <div class="winner-section invisible">
+                <span>Player 2 Venceu!!</span>
+                <div class="winner-buttons">
+                    <button class="winner-button-reset">Reiniciar</button>
+                    <button class="winner-button-menu">Menu</button>
+                </div>
             </div>
         </main>
         <script src="menu-game.js"></script>

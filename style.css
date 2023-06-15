@@ -35,6 +35,8 @@ main {
     flex-wrap: wrap;
 
     width: 600px;
+
+    position: relative;
 }
 
 .line {
@@ -171,9 +173,7 @@ main {
     box-shadow: 2px 4px 5px #000000;
 }
 
-.invisible {
-    display: none;
-}
+
 
 
 
@@ -278,8 +278,91 @@ main {
 
 
 .selected-ball {
-    border: 2px solid #0000ff;
+    border: 2px solid var(--ball-color);
 }
 .selected-x {
-    border: 2px solid #ff0000;
+    border: 2px solid var(--x-color);
+}
+
+
+
+/* Winner area */
+
+.winner-section {
+    position: absolute;
+    width: 90%;
+    height: 60%;
+
+    background-color: var(--bg-button-color);
+
+    top: 20%;
+    left: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 0px;
+
+    box-shadow: 3px 5px 7px #444444;
+}
+
+.winner-section span {
+    font-size: 2rem;
+}
+
+.winner-buttons button{
+    font-size: 1.3rem;
+
+    padding: 10px 20px;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid #999999;
+    border-radius: 5px;
+    background: var(--bg-button-color);
+    transition: .5s all ease;
+}
+
+.winner-button-reset {color: var(--ball-color);}
+
+.winner-button-menu {color: var(--x-color);}
+
+.winner-button-reset:hover {background: var(--ball-color); color: #ffffff}
+
+.winner-button-menu:hover {background: var(--x-color); color: #ffffff}
+
+
+
+/* Placar dos jogadores */
+
+.scores {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    display: flex;
+    gap: 3rem;
+
+    background: #ffffff;
+    padding: 10px;
+    box-shadow: 0px 3px 7px #444444;
+}
+
+.player-1-score, .player-2-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.player-1-score span, .player-2-score span {
+    font-size: 1.5rem;
+}
+
+.player-1-score span {color: var(--x-color)}
+.player-2-score span {color: var(--ball-color)}
+
+.invisible {
+    display: none;
 }
