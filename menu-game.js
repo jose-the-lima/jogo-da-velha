@@ -68,6 +68,11 @@ function activatePlayButton() {
     playButton.removeAttribute("disabled")
 }
 
+function deactivatePlayButton() {
+    playButton.classList.remove("start-game-button");
+    playButton.setAttribute("disabled", "disabled")
+}
+
 function limpaPlayers() {
     playerScreen1.classList.remove("selected-x");
     playerScreen2.classList.remove("selected-ball")

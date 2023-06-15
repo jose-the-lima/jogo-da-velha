@@ -310,6 +310,7 @@ function reset() {
     ativaTela(mainScreen);
     fecharTela(gameScreen);
     fecharTela(scoresArea);
+    deactivatePlayButton();
 }
 
 returnToMenuButton.addEventListener("click", reset)
